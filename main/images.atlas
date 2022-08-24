@@ -1,13 +1,13 @@
 images {
-  image: "/assets/images/block_narrow.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
   image: "/assets/images/background.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
-  image: "/assets/images/ball_red_small.png"
+  image: "/assets/images/ball.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/images/paddle.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 margin: 0
