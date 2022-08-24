@@ -1,13 +1,10 @@
-# Welcome to Defold
+# Pong game built with Defold
 
-This project was created from the "empty" project template.
+This repo contains a step-by-step mini course to build a pong game using the game engine Defold. It has one branch per section, it might not necessarily translate exactly 1 to 1 to the videos though.
 
-The settings in ["game.project"](defold://open?path=/game.project) are all the default. A bootstrap empty ["main.collection"](defold://open?path=/main/main.collection) is included.
+We'll keep the README updated as we go along.
 
-Check out [the documentation pages](https://defold.com/learn) for examples, tutorials, manuals and API docs.
+## Credits:
 
-If you run into trouble, help is available in [our forum](https://forum.defold.com).
-
-Happy Defolding!
-
----
+Defold: https://defold.com/manuals/introduction
+Assets: https://www.kenney.nl/assets/rolling-ball-assets
