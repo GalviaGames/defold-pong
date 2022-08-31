@@ -1,0 +1,21 @@
+
+local leftUp = hash("left_up")
+local leftDown = hash("left_down")
+
+local objectSpeed = 5
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+end
+
+function on_input(self, action_id, action)
+	local current_position = go.get_position()
+
+	if action_id == leftUp then
+		current_position.y = current_position.y + objectSpeed
+	elseif action_id == leftDown then
+		current_position.y = current_position.y - objectSpeed
+	end
+
+	go.set_position(current_position)
+end
