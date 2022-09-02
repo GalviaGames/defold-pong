@@ -1,0 +1,27 @@
+
+local object_speed = 300
+
+function init(self)
+    self.game_width = tonumber(sys.get_config("display.width"))
+    self.object_width = go.get("#sprite", "size.x")
+    
+    local directions = {-1, 1}
+
+    local initial_direction = directions[math.random(#directions)]
+
+    self.direction = vmath.vector3(initial_direction, 1, 0)
+end
+
+function update(self, dt)
+    local speed = vmath.vector3(object_speed * self.direction.x, object_speed * self.direction.y, 0)
+
+    local next_pos = go.get_position() + speed * dt
+
+    if next_pos.x + self.object_width < 0 or next_pos.x - self.object_width > self.game_width then
+        print("ball out of bounds")
+        go.delete()
+        return
+    end
+
+    go.set_position(next_pos)
+end
