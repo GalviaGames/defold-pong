@@ -1,5 +1,11 @@
 local BALL_OUT_OF_BOUNDS = hash("ball_out_of_bounds")
 
+local COLLISION_RESPONSE = hash("collision_response")
+local TOP_WALL = hash("/top_wall")
+local BOTTOM_WALL = hash("/bottom_wall")
+local LEFT_PADDLE = hash("/left_paddle")
+local RIGHT_PADDLE = hash("/right_paddle")
+
 local object_speed = 300
 
 function init(self)
@@ -25,4 +31,22 @@ function update(self, dt)
     end
 
     go.set_position(next_pos)
+end
+
+function on_message(self, message_id, message, sender)
+    if message_id == COLLISION_RESPONSE then
+        local other_id = message.other_id
+
+        -- only handle one collision per object at a time
+        if self.previous_other_id == other_id then
+            return
+        end
+        
+        if other_id == TOP_WALL or other_id == BOTTOM_WALL then
+            self.direction.y = self.direction.y * -1
+        elseif other_id == LEFT_PADDLE or other_id == RIGHT_PADDLE then
+            self.direction.x = self.direction.x * -1
+        end
+        self.previous_other_id = other_id
+    end
 end
