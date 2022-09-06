@@ -25,7 +25,7 @@ function update(self, dt)
     local next_pos = go.get_position() + speed * dt
 
     if next_pos.x + self.object_width < 0 or next_pos.x - self.object_width > self.game_width then
-        msg.post("controller#main_controller", BALL_OUT_OF_BOUNDS)
+        msg.post("controller#main_controller", BALL_OUT_OF_BOUNDS, { x = next_pos.x })
         go.delete()
         return
     end
