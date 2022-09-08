@@ -172,9 +172,7 @@ nodes {
   }
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
-  text: "Left player won! \n"
-  "\n"
-  "Press enter to play again..."
+  text: ""
   font: "score_font"
   id: "game_over"
   xanchor: XANCHOR_NONE
