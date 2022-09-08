@@ -1,16 +1,34 @@
 local UPDATE_LEFT_SCORE = hash("update_left_score")
 local UPDATE_RIGHT_SCORE = hash("update_right_score")
+local GAME_OVER = hash("game_over")
+local START_GAME = hash("start_game")
 
-local function update_score(id, score)
+local function update_score(id, score, animate)
 	node = gui.get_node(id)
-	gui.animate(node, 'color.w', 0, gui.EASING_LINEAR, 0.5, 0, nil, gui.PLAYBACK_ONCE_PINGPONG)
 	gui.set_text(node, score)
+	
+	if animate then
+		gui.animate(node, 'color.w', 0, gui.EASING_LINEAR, 0.5, 0, nil, gui.PLAYBACK_ONCE_PINGPONG)
+	end
 end
 
 function on_message(self, message_id, message, sender)
 	if message_id == UPDATE_LEFT_SCORE then
-		update_score("left_score", message.left_score)
+		update_score("left_score", message.left_score, true)
 	elseif message_id == UPDATE_RIGHT_SCORE then
-		update_score("right_score", message.right_score)
+		update_score("right_score", message.right_score, true)
+	elseif message_id == GAME_OVER then
+		node = gui.get_node("game_over")
+		gui.set_text(node, message.winner .. " has won!\n\nPress Enter to play again...")
+		gui.set_enabled(node, true)
+
+		local s = 1.04
+		gui.animate(node, gui.PROP_SCALE, vmath.vector4(s, s, s, 0), gui.EASING_LINEAR, 3, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
+	elseif message_id == START_GAME then
+		node = gui.get_node("game_over")
+		gui.set_enabled(node, false)
+		
+		update_score("left_score", 0)
+		update_score("right_score", 0)
 	end
 end
