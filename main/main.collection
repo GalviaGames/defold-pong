@@ -3,7 +3,7 @@ scale_along_z: 0
 embedded_instances {
   id: "background"
   data: "embedded_components {\n"
-  "  id: \"tile1\"\n"
+  "  id: \"sprite\"\n"
   "  type: \"sprite\"\n"
   "  data: \"tile_set: \\\"/main/images.atlas\\\"\\n"
   "default_animation: \\\"background\\\"\\n"
