@@ -2,15 +2,15 @@ local UPDATE_LEFT_SCORE = hash("update_left_score")
 local UPDATE_RIGHT_SCORE = hash("update_right_score")
 
 local function update_score(id, score)
-	node = gui.get_node(id)
-	gui.animate(node, 'color.w', 0, gui.EASING_LINEAR, 0.5, 0, nil, gui.PLAYBACK_ONCE_PINGPONG)
-	gui.set_text(node, score)
+    local node = gui.get_node(id)
+    gui.animate(node, 'color.w', 0, gui.EASING_LINEAR, 0.5, 0, nil, gui.PLAYBACK_ONCE_PINGPONG)
+    gui.set_text(node, score)
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == UPDATE_LEFT_SCORE then
-		update_score("left_score", message.left_score)
-	elseif message_id == UPDATE_RIGHT_SCORE then
-		update_score("right_score", message.right_score)
-	end
+    if message_id == UPDATE_LEFT_SCORE then
+        update_score("left_score", message.left_score)
+    elseif message_id == UPDATE_RIGHT_SCORE then
+        update_score("right_score", message.right_score)
+    end
 end

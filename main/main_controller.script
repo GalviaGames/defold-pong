@@ -3,31 +3,32 @@ local UPDATE_LEFT_SCORE = hash("update_left_score")
 local UPDATE_RIGHT_SCORE = hash("update_right_score")
 
 local function spawn_ball(self)
-	factory.create("ball_factory#factory", self.ball_initial_pos)
+    factory.create("ball_factory#factory", self.ball_initial_pos)
 end
 
 function init(self)
-	math.randomseed(os.time()) math.random()
-	
-	self.game_width = tonumber(sys.get_config("display.width"))
-	self.game_height = tonumber(sys.get_config("display.height"))
+    math.randomseed(os.time())
+    math.random()
 
-	self.ball_initial_pos = vmath.vector3(self.game_width / 2, self.game_height / 2, 0.5)
-	spawn_ball(self)
+    self.game_width = tonumber(sys.get_config("display.width"))
+    self.game_height = tonumber(sys.get_config("display.height"))
 
-	self.left_score = 0
-	self.right_score = 0
+    self.ball_initial_pos = vmath.vector3(self.game_width / 2, self.game_height / 2, 0.5)
+    spawn_ball(self)
+
+    self.left_score = 0
+    self.right_score = 0
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == BALL_OUT_OF_BOUNDS then
-		if message.x > self.game_width / 2 then			
-			self.left_score = self.left_score + 1
-			msg.post("gui#main", UPDATE_LEFT_SCORE, { left_score = self.left_score })
-		else
-			self.right_score = self.right_score + 1
-			msg.post("gui#main", UPDATE_RIGHT_SCORE, { right_score = self.right_score })
-		end
-		spawn_ball(self)
-	end
+    if message_id == BALL_OUT_OF_BOUNDS then
+        if message.x > self.game_width / 2 then
+            self.left_score = self.left_score + 1
+            msg.post("gui#main", UPDATE_LEFT_SCORE, { left_score = self.left_score })
+        else
+            self.right_score = self.right_score + 1
+            msg.post("gui#main", UPDATE_RIGHT_SCORE, { right_score = self.right_score })
+        end
+        spawn_ball(self)
+    end
 end
