@@ -31,24 +31,29 @@ function init(self)
     initialize_game(self)
 end
 
+local function check_game_over(self, winner)
+    if self.left_score >= MAX_SCORE or self.right_score >= MAX_SCORE then
+        self.is_game_over = true
+        msg.post("gui#main", GAME_OVER, { winner = winner })
+        return true
+    end
+    return false
+end
+
 function on_message(self, message_id, message, sender)
     if message_id == BALL_OUT_OF_BOUNDS then
         if message.x > self.game_width / 2 then
             self.left_score = self.left_score + 1
             msg.post("gui#main", UPDATE_LEFT_SCORE, { left_score = self.left_score })
 
-            if self.left_score >= MAX_SCORE then
-                self.is_game_over = true
-                msg.post("gui#main", GAME_OVER, { winner = "Left player" })
+            if check_game_over(self, "Left player") then
                 return
             end
         else
             self.right_score = self.right_score + 1
             msg.post("gui#main", UPDATE_RIGHT_SCORE, { right_score = self.right_score })
 
-            if self.right_score >= MAX_SCORE then
-                self.is_game_over = true
-                msg.post("gui#main", GAME_OVER, { winner = "Right player" })
+            if check_game_over(self, "Left player") then
                 return
             end
         end
