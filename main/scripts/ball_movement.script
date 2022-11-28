@@ -1,18 +1,16 @@
 local BALL_OUT_OF_BOUNDS = hash("ball_out_of_bounds")
 
 local COLLISION_RESPONSE = hash("collision_response")
-local TOP_WALL = hash("/top_wall")
-local BOTTOM_WALL = hash("/bottom_wall")
-local LEFT_PADDLE = hash("/left_paddle")
-local RIGHT_PADDLE = hash("/right_paddle")
+local VERTICAL_WALL = hash("vertical_wall")
+local HORIZONTAL_WALL = hash("horizontal_wall")
 
 local object_speed = 300
 
 function init(self)
     self.game_width = tonumber(sys.get_config("display.width"))
     self.object_width = go.get("#sprite", "size.x")
-    
-    local directions = {-1, 1}
+
+    local directions = { -1, 1 }
 
     local initial_direction = directions[math.random(#directions)]
 
@@ -41,12 +39,13 @@ function on_message(self, message_id, message, sender)
         if self.previous_other_id == other_id then
             return
         end
-        
-        if other_id == TOP_WALL or other_id == BOTTOM_WALL then
-            self.direction.y = self.direction.y * -1
-        elseif other_id == LEFT_PADDLE or other_id == RIGHT_PADDLE then
+
+        if message.other_group == VERTICAL_WALL then
             self.direction.x = self.direction.x * -1
+        elseif message.other_group == HORIZONTAL_WALL then
+            self.direction.y = self.direction.y * -1
         end
+
         self.previous_other_id = other_id
     end
 end
