@@ -41,9 +41,9 @@ function on_message(self, message_id, message, sender)
         end
 
         if message.other_group == HORIZONTAL_WALL then
-            self.direction.x = self.direction.x * -1
-        elseif message.other_group == VERTICAL_WALL then
             self.direction.y = self.direction.y * -1
+        elseif message.other_group == VERTICAL_WALL then
+            self.direction.x = self.direction.x * -1
         end
 
         self.previous_other_id = other_id
