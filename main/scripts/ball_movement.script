@@ -1,3 +1,5 @@
+go.property("ball_id", 0)
+
 local BALL_OUT_OF_BOUNDS = hash("ball_out_of_bounds")
 
 local COLLISION_RESPONSE = hash("collision_response")
@@ -15,16 +17,22 @@ function init(self)
     local initial_direction = directions[math.random(#directions)]
 
     self.direction = vmath.vector3(initial_direction, 1, 0)
+
+    self.out_of_bounds = false
 end
 
 function update(self, dt)
+    if self.out_of_bounds then
+        return
+    end
+
     local speed = vmath.vector3(object_speed * self.direction.x, object_speed * self.direction.y, 0)
 
     local next_pos = go.get_position() + speed * dt
 
     if next_pos.x + self.object_width < 0 or next_pos.x - self.object_width > self.game_width then
-        msg.post("controller#main_controller", BALL_OUT_OF_BOUNDS, { x = next_pos.x })
-        go.delete()
+        self.out_of_bounds = true
+        msg.post("controller#main_controller", BALL_OUT_OF_BOUNDS, { ball_id = self.ball_id, x = next_pos.x })
         return
     end
 

@@ -1,3 +1,5 @@
+local ball_spawn_timer = require "main.modules.ball_spawn_timer"
+
 local BALL_OUT_OF_BOUNDS = hash("ball_out_of_bounds")
 local UPDATE_LEFT_SCORE = hash("update_left_score")
 local UPDATE_RIGHT_SCORE = hash("update_right_score")
@@ -5,12 +7,14 @@ local GAME_OVER = hash("game_over")
 local START_GAME = hash("start_game")
 
 local MAX_SCORE = 5
+local BALL_SPAWN_TIMER_DELAY = 5
 
 local function spawn_ball(self)
-    factory.create("ball_factory#factory", self.ball_initial_pos)
+    self.ball_spawn_timer.start()
 end
 
 local function initialize_game(self)
+    self.ball_spawn_timer = ball_spawn_timer.new(BALL_SPAWN_TIMER_DELAY, self.ball_initial_pos)
     spawn_ball(self)
 
     self.left_score = 0
@@ -35,6 +39,7 @@ local function check_game_over(self, winner)
     if self.left_score >= MAX_SCORE or self.right_score >= MAX_SCORE then
         self.is_game_over = true
         msg.post("gui#main", GAME_OVER, { winner = winner })
+        self.ball_spawn_timer.cancel()
         return true
     end
     return false
@@ -58,6 +63,7 @@ function on_message(self, message_id, message, sender)
             end
         end
 
+        self.ball_spawn_timer.out_of_bounds(message.ball_id)
         spawn_ball(self)
     end
 end
