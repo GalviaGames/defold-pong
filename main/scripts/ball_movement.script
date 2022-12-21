@@ -28,7 +28,7 @@ function update(self, dt)
         return
     end
 
-    local speed = object_speed + (collision_speed * self.hits)
+    local speed = object_speed + (collision_speed * self.collisions * 2)
     local velocity = vmath.vector3(speed * self.direction.x, speed * self.direction.y, 0)
 
     local next_pos = go.get_position() + velocity * dt
@@ -58,6 +58,6 @@ function on_message(self, message_id, message, sender)
         end
 
         self.previous_other_id = other_id
-        self.hits = self.hits + 1
+        self.collisions = self.collisions + 1
     end
 end
