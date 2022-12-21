@@ -59,5 +59,7 @@ function on_message(self, message_id, message, sender)
 
         self.previous_other_id = other_id
         self.collisions = self.collisions + 1
+
+        sound.play("#sound")
     end
 end
