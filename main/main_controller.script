@@ -1,6 +1,7 @@
 local ball_spawn_timer = require "main.modules.ball_spawn_timer"
 
 local BALL_OUT_OF_BOUNDS = hash("ball_out_of_bounds")
+local BALL_COLLIDED = hash("ball_collided")
 local UPDATE_LEFT_SCORE = hash("update_left_score")
 local UPDATE_RIGHT_SCORE = hash("update_right_score")
 local GAME_OVER = hash("game_over")
@@ -8,6 +9,8 @@ local START_GAME = hash("start_game")
 
 local MAX_SCORE = 5
 local BALL_SPAWN_TIMER_DELAY = 5
+
+local CAMERA_SHAKE_INTENSITY = 6
 
 local function spawn_ball(self)
     self.ball_spawn_timer.start()
@@ -26,6 +29,7 @@ function init(self)
     math.randomseed(os.time())
     math.random()
 
+    msg.post("camera", "acquire_camera_focus")
     msg.post(".", "acquire_input_focus")
 
     self.game_width = tonumber(sys.get_config("display.width"))
@@ -65,6 +69,8 @@ function on_message(self, message_id, message, sender)
 
         self.ball_spawn_timer.out_of_bounds(message.ball_id)
         spawn_ball(self)
+    elseif message_id == BALL_COLLIDED then
+        msg.post("/camera", hash("shake"), { shake = CAMERA_SHAKE_INTENSITY })
     end
 end
 

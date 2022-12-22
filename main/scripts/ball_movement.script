@@ -1,6 +1,7 @@
 go.property("ball_id", 0)
 
 local BALL_OUT_OF_BOUNDS = hash("ball_out_of_bounds")
+local BALL_COLLIDED = hash("ball_collided")
 
 local COLLISION_RESPONSE = hash("collision_response")
 local VERTICAL_WALL = hash("vertical_wall")
@@ -61,5 +62,6 @@ function on_message(self, message_id, message, sender)
         self.collisions = self.collisions + 1
 
         sound.play("#sound")
+        msg.post("controller#main_controller", BALL_COLLIDED)
     end
 end
