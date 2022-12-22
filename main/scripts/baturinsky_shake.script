@@ -22,7 +22,6 @@ end
 
 function on_message(self, message_id, message, sender)
     if message_id == hash("shake") then
-        print("shaking camera")
         self.shake = message.shake -- britzl: added shake amount to message
     end
 end
