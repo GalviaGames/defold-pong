@@ -13,4 +13,5 @@ input_method = HiddenInputField
 
 [project]
 title = defold-pong
+dependencies#0 = https://github.com/indiesoftby/defold-hyper-trails/archive/refs/tags/1.2.0.zip
 

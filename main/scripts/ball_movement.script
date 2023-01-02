@@ -1,4 +1,5 @@
 go.property("ball_id", 0)
+go.property("texture0", hash("/hyper_trails/textures/data/texture0_1.png"))
 
 local BALL_OUT_OF_BOUNDS = hash("ball_out_of_bounds")
 local BALL_COLLIDED = hash("ball_collided")
@@ -22,6 +23,8 @@ function init(self)
 
     self.out_of_bounds = false
     self.collisions = 0
+
+    go.set("#trail_model", "texture0", self.texture0)
 end
 
 function update(self, dt)
