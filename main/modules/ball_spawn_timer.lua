@@ -9,8 +9,10 @@ function M.new(delay, ball_pos)
 
     local function spawn_ball()
         currentId = currentId + 1
+        
         local texture_id = ((currentId - 1) % 10) + 1
         local texture0 = go.get("/texture_loader#texture_loader", "t" .. tostring(texture_id))
+        
         state.balls[currentId] = factory.create("ball_factory#factory", ball_pos, nil, { ball_id = currentId, texture0 = texture0 })
     end
 
